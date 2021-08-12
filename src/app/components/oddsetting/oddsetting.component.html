@@ -1,0 +1,342 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<div id="demo1" class="page-wrapper chiller-theme toggled">
+    <app-navbar></app-navbar>
+    <!-- sidebar-wrapper  -->
+    <main class="page-content">
+      <div class="container-fluid">
+        <h2>OddSettings</h2>
+        <hr>
+        <div class="container-fluid mb-5">
+            <div class="text-center mt-5">
+                <h1>Our Odd Settings</h1>
+            </div>
+          
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="our-services settings" (click)="getSport()">
+                            <div class="icon">  <img src="https://i.imgur.com/6NKPrhO.png"> </div>
+                            <h4>Sports</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="our-services speedup" (click)="getlocationSportBySportIdBool()">
+                            <div class="icon"> <img src="https://i.imgur.com/KMbnpFF.png"> </div>
+                            <h4>locations </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="our-services privacy" (click)="getleaguesbysportIdandlocationId()">
+                            <div class="icon"> <img src="https://i.imgur.com/AgyneKA.png"> </div>
+                            <h4>leagues </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="our-services backups" (click)="geteventsbyleaguesId()" >
+                            <div class="icon"> <img src="https://i.imgur.com/vdH9LKi.png"> </div>
+                            <h4>Events </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="our-services backups" (click)="EditmarketsSettings()" >
+                            <div class="icon"> <img src="https://i.imgur.com/vdH9LKi.png"> </div>
+                            <h4>Edit Events </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="row" >
+          <div style="float:left;width:10%" *ngIf="locationbysportidbool">
+            <select   style="height:40px ;font-weight: bold;font-size:15px;width:100%;border-radius: 10px;"(change)="selectsport()" [(ngModel)]="selectedSport">
+                <option *ngFor="let opt of sportsVar |sort" [ngValue]="opt.id"   >
+                  {{opt.name}}
+                </option>
+              </select>
+          </div>
+          <div style="float:left;width:10%" *ngIf="getleaguesbysportIdandlocationIdBool">
+            <select   style="height:40px ;font-weight: bold;font-size:15px;margin-left:5px;width:100%;border-radius: 10px;" (change)="selectlocation()" [(ngModel)]="selectedlocation">
+                <option *ngFor="let opt of locationSportBySportVar |sort" [ngValue]="opt.id"   >
+                  {{opt.name }}
+                </option>
+              </select>
+          </div>
+          <div style="float:left;width:10%" *ngIf="geteventsbyleaguesIdBool">
+            <select   style="height:40px ;font-weight: bold;font-size:15px;margin-left:10px;width:100%;border-radius: 10px;" (change)="selectleagues()" [(ngModel)]="selectedleagues">
+                <option *ngFor="let opt of leagueBySportandlocationVar |sort" [ngValue]="opt.id"   >
+                  {{opt.name}}
+                </option>
+              </select>
+          </div>
+        
+          <div style="float:right" *ngIf="selectedeventsleaguesearchbool">
+            <button style="height:40px;border-radius: 5px;width:80px;background-color:rgb(224, 0, 138);color:white;border:none" (click)="getEditEvents()">Search</button>
+          </div>
+     
+    </div>
+      <div class="row "  style="margin-top:1%">
+        <table class="container" id="table" *ngIf="bol1" >
+            <thead >
+                <tr>
+            <th> ID </th>
+            <th> name </th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let item of sportsVar" >
+            <td>{{item.id}}</td>
+            <td>{{item.name}} </td>
+        
+
+
+
+        </tbody>
+
+
+        </table>
+        <table class="container" id="table" *ngIf="bol2" >
+            <thead >
+                <tr>
+            <th> ID </th>
+            <th> name </th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let item of locationSportBySportVar" >
+            <td>{{item.id}}</td>
+            <td>{{item.name}} </td>
+        
+
+
+
+        </tbody>
+
+
+        </table>
+        <table class="container" id="table" *ngIf="bol3" >
+            <thead >
+                <tr>
+            <th> ID </th>
+            <th> name </th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let item of leagueBySportandlocationVar" >
+            <td>{{item.id}}</td>
+            <td>{{item.name}} </td>
+        
+
+
+
+        </tbody>
+
+
+        </table>
+        <table class="container" id="table" *ngIf="bol4" >
+            <thead >
+                <tr>
+            <th> ID </th>
+            <th> Location Name </th>
+            <th> league Name </th>
+            <th> Home</th>
+            <th> Away </th>
+            <th> Sport Name </th>
+            <th> Event Date </th>
+            <th>  Displayed </th>
+            <th>  Top </th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let item of eventsbyleaguesVar" >
+            <td>{{item.id}}</td>
+            <td>{{item.locationName}} </td>
+            <td>{{item.leagueName}} </td>
+            <td>{{item.firstParticipant}} </td>
+            <td>{{item.secondParticipant}} </td>
+            <td>{{item.sportName}} </td>
+            <td>{{item.eventDate | date: 'short'}} </td>
+            <td *ngIf="item.isDisplayed==true">
+                <div>
+                    <button class="btn btn-default disabled">
+                        True
+                    </button>
+                    <button >
+                        false
+                    </button>
+                </div>
+            </td>
+            <td *ngIf="item.isDisplayed==false">
+                <div>
+                    <button >
+                        True
+                    </button>
+                    <button class="btn btn-default disabled" >
+                        false
+                    </button>
+                </div>
+            </td>
+            <td>{{item.isTop}} </td>
+        </tbody>
+
+
+        </table>
+        <table class="container" id="table" *ngIf="bol5" >
+            <thead >
+                <tr>
+            <th> Match</th>
+            <th>   </th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let item of editeventsVar" >
+            <td>{{item.sportName}} &nbsp; {{item.locationName}} - {{item.leagueName}} : {{item.firstParticipant}} vs {{item.secondParticipant}} &nbsp; {{item.eventDate | date: 'short'}} </td>
+            <td >
+                <button (click)="market(item.marketsSettings)" style="width:100%" >
+                    Edit 
+                </button>
+            
+            </td>
+        
+        </tbody>
+
+
+        </table>
+        <nav aria-label="Page navigation example" *ngIf="bol5">
+            <ul class="pagination">
+              <li class="page-item" ><a class="page-link" >Previous</a></li>
+              <li class="page-item" (click)="pagination(1)"><a class="page-link" >1</a></li>
+              <li class="page-item" (click)="pagination(2)"><a class="page-link" >2</a></li>
+              <li class="page-item" (click)="pagination(3)"><a class="page-link" >3</a></li>
+              <li class="page-item"><a class="page-link">Next</a></li>
+            </ul>
+          </nav>
+        <div class="row" style="margin-top: 2%;">
+            <table class="container" id="table" *ngIf="bol6" >
+                <thead >
+                    <tr>
+                <th> Show </th>
+                <th> Market Name </th>
+                <th>  </th>
+               
+            </tr>
+            </thead>
+            <tbody *ngFor="let item of oddsmarket" >
+                <td *ngIf="item.isDisplayed==true">
+                    <div  class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+                         id="myonoffswitch" [checked]="item.isDisplayed"
+                       (change)="getSwitcherValue(item.isDisplayed)">
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                          <span #onoffswitch class="onoffswitch-inner"></span>
+                          <span class="onoffswitch-switch"></span>
+                        </label>
+                     </div>
+                </td>
+                <td *ngIf="item.isDisplayed==false">
+                    
+                    <div  class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" 
+                         id="myonoffswitch" [checked]="item.isDisplayed"
+                       (change)="getSwitcherValue(item.isDisplayed)">
+                       
+                     </div>
+                </td>
+                <td>{{item.marketName}}</td>
+                <td >
+                    <button (click)="marketbets(item.bets)" style="width:100%"  onclick="document.getElementById('id03').style.display='block'" >
+                        Edit
+                    </button>
+                
+                </td>
+            
+            </tbody>
+    
+    
+            </table>
+        </div>
+        <div class="w3-container" style="font-family: 'Open Sans', sans-serif;">
+            <div id="id03" class="w3-modal" style="z-index: 999;">
+                <div class="w3-modal-content " style="width: 80%;background-color: #31353D;">
+                    <div class="w3-container" style="background-color: #31353D;">
+                        <div class="card" style="background-color: #31353D;border: none;margin-bottom: 5%;">
+                            <span onclick="document.getElementById('id03').style.display='none'" class="w3-button w3-display-topright" style="color: white;">&times;</span>
+        
+                            <div class="card-body" style="margin-top: 5%;">
+                               
+                                <table class="container" id="table" *ngIf="bol5" >
+                                    <thead >
+                                        <tr>
+                                     <th> Show </th>
+                                    <th> Bet Name  </th>
+                                    <th> Rate </th>
+                                    <th> odds Value </th>
+                                    <th> odds new Value </th>
+                                    <th> </th>
+                                </tr>
+                                </thead>
+                                <tbody *ngFor="let item of betsVar" >
+                                    <td *ngIf="item.isDispalyed==true">
+                                        <div>
+                                            <button class="btn btn-default disabled">
+                                                True
+                                            </button>
+                                            <button >
+                                                false
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="item.isDispalyed==false">
+                                        <div>
+                                            <button >
+                                                True
+                                            </button>
+                                            <button class="btn btn-default disabled" >
+                                                false
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>{{item.betName}} </td>
+                                    <td >
+                                        <input type="text" 
+                                            class="form-control" 
+                                            placeholder="{{item.marge}}" 
+                                           
+                                            />
+                                    
+                                    </td>
+                                    <td>{{item.currentValue}} </td>
+                                    <td> {{item.currentValue | newValue:item.direction:item.marge}} </td>
+                                    <td> 
+                                        <div>
+                                            <button (click)="direction(item,1)"  class="btn btn-default " style="background-color: #30B44A;border-color: #30B44A;box-shadow: inset 0 0 0 #217d33, 0 5px 0 0 #217d33, 0 10px 5px #999999;  display: inline-block;text-decoration: none;text-transform: uppercase;text-align: center;padding-top: 6px;position: relative; cursor: pointer;border-radius: 5px;font-weight: 600;color: white;">
+                                                 [0.05]
+                                            </button>
+                                            <button (click)="direction(item,2)" class="btn btn-default " style="background-color: #a00101;border-color: #a00101;box-shadow: inset 0 0 0 #a00101, 0 5px 0 0 #a00101, 0 10px 5px #999999;  display: inline-block;text-decoration: none;text-transform: uppercase;text-align: center;padding-top: 6px;position: relative; cursor: pointer;border-radius: 5px;font-weight: 600;color: white; margin-left: 5px;">
+                                                 [0.05]
+                                            </button>
+                                        </div>
+                                    </td>
+                                
+                                </tbody>
+                        
+                        
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </main>
+   
+  </div>
+  
+  
