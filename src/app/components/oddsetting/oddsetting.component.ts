@@ -173,11 +173,11 @@ selectleagues(){
     this.serviceSport.editevents(pgi,this.selectedSport,this.selectedlocation,this.selectedleagues).subscribe(data => {
       console.log(data)
       this.bol5=true;
-      this.editeventsVar= data.events
+      // this.editeventsVar= data.events
   });
   }
   getEditEvents(){
-    this.serviceSport.editevents(this.pg,this.selectedSport,this.selectedlocation,this.selectedleagues).subscribe(data => {
+    this.serviceSport.editevents(this.pg,this.selectedSport,this.selectedlocation,this.selectedleagues).subscribe((data:any) => {
       this.bol5=true;
       this.editeventsVar= data.events
       console.log(data.events)

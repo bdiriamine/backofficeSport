@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OddSettingsSport } from '../models/oddSettingsSport';
 import { Observable } from 'rxjs/internal/Observable';
-
+import { Events } from '../models/events';
 @Injectable({
   providedIn: 'root'
 })
@@ -30,7 +30,7 @@ export class SportsService {
   }
   getleaguesbysportIdandlocationIdService(sportId: string, locationId: string) {
 
-    return this.http.get(this.urleagues + sportId + "/" + locationId, {
+    return this.http.get<OddSettingsSport[]>(this.urleagues + sportId + "/" + locationId, {
       params: {
         sportId: sportId,
         locationId: locationId,
@@ -63,6 +63,6 @@ export class SportsService {
         "leagueId": leagueId,
       }
     ];
-    return this.http.post<any>('https://moxchedpfa.azurewebsites.net/api/OddSettings/odds/filter/' + pageNumber, body, this.httpOptions)
+    return this.http.post<Events[]>('https://moxchedpfa.azurewebsites.net/api/OddSettings/odds/filter/' + pageNumber, body, this.httpOptions)
   }
 }
